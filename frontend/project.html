@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Project</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <style>
+        body {
+            margin: 0;
+            height: 100%;
+            width: fit-content;
+        }
+
+        #project-name {
+            color: white;
+            text-decoration: none;
+        }
+
+        .sidenav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            padding-top: 10vh;
+        }
+
+        .sidenav ul li a {
+            display: block;
+            color: #000;
+            padding: 10px 16px;
+            text-decoration: none;
+        }
+
+        nav div a{
+            text-decoration: none;
+        }
+        
+        div#canvas{
+            width: 200vh; 
+            height: 200vh; 
+            border: solid 1px rgb(167, 167, 167); 
+            z-index: 1; 
+            position: relative; 
+            margin: 20vh;
+        }
+
+        div.lyric{
+            font-size: 10;
+            width: fit-content;
+            border: solid black 1px;
+            padding: 10px
+        }
+    
+        .song-title{
+    	    text-align: center;
+    	    margin-bottom: 10px;
+            width: 320px;
+            display: block;
+        }
+    
+        textarea.lyric-content{
+    	    width: 320px;
+            height: 200px;
+            display: block;
+        }
+    
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 justify-content-between p-5 fixed-top" style="height: 8vh; z-index: 3;">
+            <div>
+                <a href="#home">
+                    <img src="lyric-icon.png" width="25" height="25" alt="lyric-icon.png">
+                </a>
+                <a href="#news">
+                    <img src="voicenote-icon.png" width="25" height="25" alt="voicenote-icon.png">
+                </a>
+            </div>
+            <div>
+                <a id="project-name" href="#">My Project</a>
+            </div>
+            <div></div>
+    </nav>
+    <div class="sidenav fixed-top" style="width: 9vh; height: 100vh; background-color: rgb(221, 221, 221); z-index: 2;">
+        <ul>
+            <li><a id="create-lyric" href="">
+                <img src="lyric-icon.png" width="25" height="25" alt="lyric-icon.png">
+            </a></li>
+            <li><a id="create-voicenote" href="">
+                <img src="voicenote-icon.png" width="25" height="25" alt="voicenote-icon.png">
+            </a></li>
+          </ul>
+    </div>
+
+    <div id="canvas">
+
+    </div>
+
+    <template id="template-lyric">
+        <div class="lyric">
+            <input type="text" name="song_title" class="song-title" placeholder="judul lagu">
+            <textarea class="lyric-content" placeholder="lirik lagu"></textarea>
+        </div>
+    </template>
+
+    <script>
+        var canvas = document.getElementById("canvas");
+        var create_lyric_button = document.getElementById("create-lyric");
+
+        create_lyric_button.onclick =  function(){
+
+            document.body.style.cursor = "crosshair";
+            canvas.onclick = function(){
+
+                //get template
+                let template = document.getElementById("template-lyric");
+                clone = template.content.firstElementChild.cloneNode(true);
+                this.appendChild(clone);
+
+                document.body.style.cursor = "default";
+                // detach event onclick
+                this.onclick = null;
+            }
+            return false;
+        }
+
+
+        document.getElementById("create-voicenote").onclick =  function(){
+            alert(1)
+            return false;
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>
