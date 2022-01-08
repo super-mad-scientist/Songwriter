@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<style>
+#mydiv {
+  position: absolute;
+  z-index: 9;
+  background-color: #f1f1f1;
+  text-align: center;
+  border: 1px solid #d3d3d3;
+}
+
+#mydivheader {
+  padding: 10px;
+  cursor: move;
+  z-index: 10;
+  background-color: #2196F3;
+  color: #fff;
+}
+</style>
+<body>
+
+<h1>Draggable DIV Element</h1>
+
+<p>Click and hold the mouse button down while moving the DIV element</p>
+
+<div id="canvas" style="width: 500px; height: 300px; background-color:brown; position:relative; left: 400px; top: 100px">
+	<div id="mydiv">
+  		<div id="mydivheader">Click here to move</div>
+  		<p>Move</p>
+  		<p>this</p>
+  		<p>DIV</p>
+	</div>
+<div>
+
+
+
+<script>
+//Make the DIV element draggagle:
+dragElement(document.getElementById("mydiv"), document.getElementById("canvas"));
+
+function dragElement(elmnt, canvas) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id + "header")) {
+    /* if present, the header is where you move the DIV from:*/
+    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+  } else {
+    /* otherwise, move the DIV from anywhere inside the DIV:*/
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+	function elementDrag(e) {
+    	e = e || window.event;
+    	e.preventDefault();
+    
+   		// calculate the new cursor position:
+    	pos1 = pos3 - e.clientX;
+    	pos2 = pos4 - e.clientY;
+    	pos3 = e.clientX;
+    	pos4 = e.clientY;
+    	// set the element's new position:
+    	if(elmnt.offsetTop >= 0){
+    		elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    	} else if(elmnt.offsetTop < 0){
+    		elmnt.style.top = 0;   
+    	}
+
+    	if(elmnt.offsetTop + elmnt.offsetHeight > canvas.offsetHeight){
+        	elmnt.style.top = canvas.offsetHeight - elmnt.offsetHeight + "px";
+    	}
+
+		if(elmnt.offsetLeft + elmnt.offsetWidth > canvas.offsetWidth){
+        	elmnt.style.left = canvas.offsetWidth - elmnt.offsetWidth + "px";
+    	}
+        	  	       
+    	if(elmnt.offsetLeft >= 0){
+        	elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+    	}else{
+			elmnt.style.left = 0;
+		}      
+	}
+
+  	function closeDragElement() {
+    	/* stop moving when mouse button is released:*/
+    	document.onmouseup = null;
+    	document.onmousemove = null;
+  	}
+}
+</script>
+
+</body>
+</html>
